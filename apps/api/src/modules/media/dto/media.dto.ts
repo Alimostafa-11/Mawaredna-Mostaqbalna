@@ -36,6 +36,11 @@ export class CreateMediaDto {
   @IsString()
   thumbnailUrl?: string;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  thumbnailStorageKey?: string;
+
   @ApiPropertyOptional({ enum: MEDIA_CATEGORIES })
   @IsOptional()
   @IsIn(MEDIA_CATEGORIES as unknown as string[])

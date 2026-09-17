@@ -3,8 +3,11 @@
 # Build context is the REPOSITORY ROOT:
 #   docker build -f apps/web/Dockerfile -t mawaredna-web .
 #
-# NEXT_PUBLIC_* values are inlined at build time, so they are build args here
-# rather than runtime environment variables.
+# NEXT_PUBLIC_* values are inlined into the client bundle at build time, so
+# they are build args here rather than runtime environment variables. The one
+# exception is NEXT_PUBLIC_MEDIA_HOST: next.config.ts turns it into
+# `images.remotePatterns`, and the standalone server re-reads that config on
+# boot, so it has to be present in the runtime stage as well.
 
 FROM node:24-alpine AS base
 WORKDIR /app
@@ -36,9 +39,14 @@ RUN npm run build --workspace @agri/web
 
 # ---- Runtime ----------------------------------------------------------------
 FROM base AS runtime
+
+# Re-declared because ARGs do not cross stage boundaries.
+ARG NEXT_PUBLIC_MEDIA_HOST
+
 ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0 \
+    NEXT_PUBLIC_MEDIA_HOST=$NEXT_PUBLIC_MEDIA_HOST \
     NEXT_TELEMETRY_DISABLED=1
 
 RUN apk add --no-cache dumb-init
@@ -49,6 +57,10 @@ RUN apk add --no-cache dumb-init
 COPY --from=build /app/apps/web/.next/standalone ./
 COPY --from=build /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=build /app/apps/web/public ./apps/web/public
+
+# The image optimiser caches resized files here, and cannot create the
+# directory itself once the process has dropped to an unprivileged user.
+RUN mkdir -p /app/apps/web/.next/cache && chown -R node:node /app/apps/web/.next
 
 USER node
 EXPOSE 3000

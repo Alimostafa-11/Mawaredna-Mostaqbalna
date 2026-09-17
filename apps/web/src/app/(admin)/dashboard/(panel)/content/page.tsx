@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Images } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
@@ -94,13 +94,23 @@ export default async function DashboardContentPage() {
       <Notice>{t('content.approvalNote')}</Notice>
       <Notice>{t('content.editNote')}</Notice>
 
-      <Link
-        href="/dashboard/api"
-        className="inline-flex items-center gap-2 self-start rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
-      >
-        <ExternalLink aria-hidden className="size-4" />
-        {t('content.openApi')}
-      </Link>
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href="/dashboard/media"
+          className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+        >
+          <Images aria-hidden className="size-4" />
+          {t('nav.media')}
+        </Link>
+
+        <Link
+          href="/dashboard/api"
+          className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-2.5 text-sm font-semibold transition-colors hover:border-brand-500"
+        >
+          <ExternalLink aria-hidden className="size-4" />
+          {t('content.openApi')}
+        </Link>
+      </div>
     </div>
   );
 }

@@ -29,7 +29,9 @@ export class UploadsController {
     }
 
     const folder = dto.folder ?? 'gallery';
-    const extension = extname(dto.fileName).toLowerCase() || guessExtension(dto.contentType);
+    // Taken from the validated content type rather than the submitted name, so
+    // a stored key can never end in an extension the API does not allow.
+    const extension = extensionFor(dto.contentType) || safeExtension(dto.fileName);
     const key = `${folder}/${new Date().getFullYear()}/${randomUUID()}${extension}`;
 
     return this.s3.createPresignedUpload({ key, contentType: dto.contentType });
@@ -47,7 +49,7 @@ export class UploadsController {
   }
 }
 
-function guessExtension(contentType: string): string {
+function extensionFor(contentType: string): string {
   const map: Record<string, string> = {
     'image/jpeg': '.jpg',
     'image/png': '.png',
@@ -59,4 +61,10 @@ function guessExtension(contentType: string): string {
   };
 
   return map[contentType] ?? '';
+}
+
+/** Last resort for a content type outside the map: letters and digits only. */
+function safeExtension(fileName: string): string {
+  const extension = extname(fileName).toLowerCase();
+  return /^\.[a-z0-9]{1,5}$/.test(extension) ? extension : '';
 }

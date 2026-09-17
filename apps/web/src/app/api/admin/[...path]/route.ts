@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache';
 import { NextResponse } from 'next/server';
 import { getAdminToken, getApiUrl } from '@/lib/admin-auth';
 
@@ -10,6 +11,21 @@ import { getAdminToken, getApiUrl } from '@/lib/admin-auth';
  * already permits — the API still enforces the guard on every route.
  */
 const FORWARDED_HEADERS = ['content-type'];
+
+/**
+ * Cache tags the public pages attach to their reads, keyed by the API resource
+ * a write lands on. Without this a photo uploaded in the panel would sit
+ * invisible on /gallery until the five-minute revalidate window lapsed, which
+ * reads as a broken upload rather than a cached page.
+ */
+const CONTENT_TAGS: Record<string, string> = {
+  settings: 'settings',
+  services: 'services',
+  products: 'products',
+  projects: 'projects',
+  partners: 'partners',
+  media: 'media',
+};
 
 async function proxy(
   request: Request,
@@ -53,6 +69,15 @@ async function proxy(
       { message: 'Could not reach the API' },
       { status: 502 },
     );
+  }
+
+  // Only on a write that actually succeeded - a rejected PATCH has changed
+  // nothing, so dropping the cache would just cost everyone a re-render.
+  if (hasBody && response.ok) {
+    const tag = CONTENT_TAGS[path[0]];
+    // `expire: 0` so the next visitor gets the new content rather than one
+    // more serving of the stale page.
+    if (tag) revalidateTag(tag, { expire: 0 });
   }
 
   const text = await response.text();

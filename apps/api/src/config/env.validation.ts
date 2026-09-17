@@ -34,6 +34,12 @@ export const envSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
   S3_PUBLIC_URL: z.string().optional(),
   S3_ENDPOINT: z.string().optional(),
+  /**
+   * Host to sign browser-facing URLs against, when it differs from the one the
+   * API itself talks to. Needed whenever S3_ENDPOINT is only resolvable from
+   * inside the network (the docker-compose MinIO, say); unset on real AWS.
+   */
+  S3_PUBLIC_ENDPOINT: z.string().optional(),
   S3_FORCE_PATH_STYLE: booleanish.default(false),
 
   THROTTLE_TTL: z.coerce.number().int().positive().default(60_000),

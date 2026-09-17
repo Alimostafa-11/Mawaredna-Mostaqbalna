@@ -1,6 +1,8 @@
-import type { InquiryType, Localized } from './types';
+import type { InquiryType, Localized, MediaCategory, MediaItem, MediaKind } from './types';
 
 export type { Paginated } from './types';
+export { MEDIA_CATEGORIES } from './types';
+export type { MediaCategory, MediaKind } from './types';
 
 export type InquiryStatus = 'new' | 'in-progress' | 'quoted' | 'closed';
 
@@ -67,6 +69,42 @@ export interface ContentSummaryRow {
   pending?: number;
   note?: 'approval';
   
+}
+
+/**
+ * A gallery item as the admin endpoints return it: the public `MediaItem`
+ * plus the fields the panel needs but visitors never see - the ordering
+ * weight, the publication flag and the S3 keys behind the URLs.
+ */
+export interface MediaRecord extends MediaItem {
+  caption?: Localized;
+  storageKey: string;
+  thumbnailStorageKey: string;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Body of `POST /media`, written by the uploader once the bytes are in S3. */
+export interface CreateMediaPayload {
+  title: Localized;
+  kind: MediaKind;
+  url: string;
+  storageKey: string;
+  thumbnailUrl?: string;
+  thumbnailStorageKey?: string;
+  category: MediaCategory;
+  caption?: Localized;
+  order?: number;
+  isActive?: boolean;
+}
+
+/** Response of `POST /uploads/presign`. */
+export interface PresignedUpload {
+  uploadUrl: string;
+  key: string;
+  publicUrl: string;
 }
 
 export interface PartnerRecord {

@@ -12,6 +12,13 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 export class S3Service implements OnModuleInit {
   private readonly logger = new Logger(S3Service.name);
   private readonly client: S3Client;
+  /**
+   * Signs the URLs the browser uses. Usually the same client, but a SigV4
+   * signature covers the Host header, so an endpoint that is only resolvable
+   * inside the network cannot simply be swapped out afterwards - it has to be
+   * signed against the host the browser will actually call.
+   */
+  private readonly signer: S3Client;
   private readonly bucket: string;
   private readonly publicBase: string;
 
@@ -24,16 +31,33 @@ export class S3Service implements OnModuleInit {
     this.bucket = this.config.get<string>('S3_BUCKET', '');
     this.publicBase = (this.config.get<string>('S3_PUBLIC_URL') ?? '').replace(/\/$/, '');
 
-    this.client = new S3Client({
+    const common = {
       region,
       // Explicit keys are for local development only. On ECS / App Runner /
       // EC2 leave them unset so the SDK picks up the IAM role automatically.
       ...(accessKeyId && secretAccessKey
         ? { credentials: { accessKeyId, secretAccessKey } }
         : {}),
-      ...(endpoint ? { endpoint } : {}),
       forcePathStyle: this.config.get<boolean>('S3_FORCE_PATH_STYLE', false),
-    });
+      /*
+       * Without this the SDK signs every PutObject with a CRC32 of the body it
+       * can see - which, when presigning, is no body at all. The browser then
+       * PUTs real bytes against a URL that already promised the checksum of an
+       * empty one, and S3 rejects it. MinIO happens to let it through, so the
+       * failure would only ever have shown up in production.
+       */
+      requestChecksumCalculation: 'WHEN_REQUIRED' as const,
+    };
+
+    const publicEndpoint =
+      this.config.get<string>('S3_PUBLIC_ENDPOINT') || endpoint;
+
+    this.client = new S3Client({ ...common, ...(endpoint ? { endpoint } : {}) });
+
+    this.signer =
+      publicEndpoint === endpoint
+        ? this.client
+        : new S3Client({ ...common, endpoint: publicEndpoint });
   }
 
   async onModuleInit() {
@@ -71,7 +95,7 @@ export class S3Service implements OnModuleInit {
       ContentType: params.contentType,
     });
 
-    const uploadUrl = await getSignedUrl(this.client, command, {
+    const uploadUrl = await getSignedUrl(this.signer, command, {
       expiresIn: params.expiresIn ?? 900,
     });
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Inbox, LayoutDashboard, Plug, Rows3 } from 'lucide-react';
+import { Images, Inbox, LayoutDashboard, Plug, Rows3 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,6 +13,7 @@ const ITEMS = [
   { href: '/dashboard', labelKey: 'nav.overview', Icon: LayoutDashboard },
   { href: '/dashboard/leads', labelKey: 'nav.leads', Icon: Inbox },
   { href: '/dashboard/content', labelKey: 'nav.content', Icon: Rows3 },
+  { href: '/dashboard/media', labelKey: 'nav.media', Icon: Images },
   { href: '/dashboard/api', labelKey: 'nav.api', Icon: Plug },
 ] as const;
 

@@ -83,23 +83,30 @@ export interface Partner {
   type: 'client' | 'partner' | 'institution' | 'farm';
 }
 
-export type MediaCategory =
-  | 'work-sites'
-  | 'equipment'
-  | 'collection'
-  | 'aggregation'
-  | 'compost-windrows'
-  | 'turning'
-  | 'processing'
-  | 'final-product'
-  | 'supply'
-  | 'farms'
-  | 'team';
+/** Kept in the order the gallery filter bar should offer them. Mirrors
+ *  MEDIA_CATEGORIES in the API's media schema. */
+export const MEDIA_CATEGORIES = [
+  'work-sites',
+  'equipment',
+  'collection',
+  'aggregation',
+  'compost-windrows',
+  'turning',
+  'processing',
+  'final-product',
+  'supply',
+  'farms',
+  'team',
+] as const;
+
+export type MediaCategory = (typeof MEDIA_CATEGORIES)[number];
+
+export type MediaKind = 'image' | 'video';
 
 export interface MediaItem {
   _id: string;
   title: Localized;
-  kind: 'image' | 'video';
+  kind: MediaKind;
   url: string;
   thumbnailUrl: string;
   category: MediaCategory;

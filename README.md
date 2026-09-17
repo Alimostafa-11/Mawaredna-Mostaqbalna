@@ -175,6 +175,7 @@ GET  /api/v1/partners            GET /api/v1/media
 GET  /api/v1/calculator/options  POST /api/v1/calculator/estimate
 POST /api/v1/inquiries
 POST /api/v1/auth/login
+GET  /api/v1/media/admin         (admin) gallery list including hidden items
 POST /api/v1/uploads/presign     (admin) direct-to-S3 upload URL
 ```
 
@@ -195,6 +196,7 @@ has no localized URLs, no sitemap entry and sends `noindex`.
 | `/dashboard` | Lead counts by status and type, plus the latest requests |
 | `/dashboard/leads` | Inbox: filter by status, type and free text; expand a lead for the full record; change status and keep internal notes |
 | `/dashboard/content` | What is published per collection, and what is held back awaiting approval |
+| `/dashboard/media` | Upload gallery photos and videos, name and categorise them, reorder, hide or delete |
 | `/dashboard/api` | Run the admin-protected GET endpoints and read the raw JSON |
 
 Seeded credentials are `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the API env
@@ -211,18 +213,47 @@ Writes go through `/api/admin/*`, a pass-through that attaches the token
 server-side. It grants nothing beyond the signed-in session — the API still
 enforces its guard on every route.
 
+### Gallery uploads
+
+`/dashboard/media` is the one content type with a full editor. Files are
+staged in the browser, named and categorised, then uploaded one at a time:
+
+1. `POST /uploads/presign` returns a short-lived `uploadUrl` and object key
+2. The **browser** PUTs the file straight to S3 — the bytes never pass through
+   the API or the Next server, so a 200 MB site video costs neither container
+   anything
+3. For a video, a poster frame is grabbed from the local file with a canvas and
+   uploaded alongside it
+4. `POST /media` saves the record; if that fails the object is deleted again,
+   so a failed publish leaves nothing behind
+
+Deleting a gallery item also deletes its objects from the bucket. Hiding
+(`isActive: false`) is the reversible option and is offered first.
+
+Because the browser PUTs directly, **the bucket needs CORS** allowing `PUT` and
+the `Content-Type` header from the site's origin. MinIO permits this out of the
+box; a real S3 bucket does not until you set it:
+
+```json
+[{ "AllowedOrigins": ["https://mawaredna.com"],
+   "AllowedMethods": ["PUT", "GET"],
+   "AllowedHeaders": ["Content-Type"],
+   "MaxAgeSeconds": 3000 }]
+```
+
+Accepted formats are JPG, PNG, WebP and AVIF up to 15 MB, and MP4 and WebM up
+to 200 MB. Anything else — `.mov` off an iPhone, `.heic` — has to be converted
+first, because the gallery renders these files directly in the browser.
+
 ### Not in the dashboard yet
 
-Creating and editing content (services, products, projects, partners, media)
-and uploading files still happen through the API. Use `/dashboard/api` to read,
-and Swagger at http://localhost:4000/api/docs for writes:
+Creating and editing services, products, projects and partners still happens
+through the API. Use `/dashboard/api` to read, and Swagger at
+http://localhost:4000/api/docs for writes:
 
 1. `POST /api/v1/auth/login`, copy `accessToken`
 2. Click **Authorize**, paste it
 3. Every padlocked endpoint becomes callable
-
-Uploads are two steps: `POST /uploads/presign` for a short-lived `uploadUrl`,
-`PUT` the file to it, then save the returned `publicUrl` on the record.
 
 ### Lead capture protections
 
