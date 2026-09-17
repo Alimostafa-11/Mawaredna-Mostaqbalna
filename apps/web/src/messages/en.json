@@ -1,0 +1,542 @@
+{
+  "meta": {
+    "siteName": "Mawaredna Mostaqbalna",
+    "tagline": "From our waste, we build our future",
+    "description": "Mawaredna Mostaqbalna collects, processes and recycles agricultural and sugarcane residues into compost and organic fertilisers."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "services": "What we do",
+    "compost": "Compost",
+    "process": "From waste to product",
+    "sugarcane": "Sugarcane residues",
+    "projects": "Projects",
+    "sustainability": "Sustainability",
+    "partners": "Clients and partners",
+    "gallery": "Gallery",
+    "calculator": "Farm calculator",
+    "request": "Request a service",
+    "contact": "Contact us",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "more": "More",
+    "skipToContent": "Skip to content"
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "readMore": "Read more",
+    "orderNow": "Order the product",
+    "requestService": "Request the service",
+    "requestQuote": "Request a quote",
+    "contactUs": "Contact us",
+    "whatsapp": "WhatsApp",
+    "callUs": "Call us",
+    "email": "Email",
+    "facebook": "Facebook",
+    "viewOnMap": "View on map",
+    "address": "Address",
+    "loading": "Loading...",
+    "submit": "Send",
+    "submitting": "Sending...",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "optional": "optional",
+    "required": "required",
+    "all": "All",
+    "backHome": "Back to home",
+    "switchLanguage": "Change language",
+    "toggleTheme": "Toggle theme",
+    "noResults": "There is nothing to show here yet."
+  },
+  "home": {
+    "heroTitle": "From our waste, we build our future",
+    "heroSubtitle": "We collect agricultural and sugarcane residues, process them and recycle them into compost and organic fertilisers.",
+    "heroPrimaryCta": "Order compost",
+    "heroSecondaryCta": "Services for farms and companies",
+    "introTitle": "About the company",
+    "servicesTitle": "What we do",
+    "servicesSubtitle": "Organised solutions for collecting, processing and recycling agricultural waste.",
+    "productTitle": "Mawaredna Mostaqbalna Compost",
+    "productSubtitle": "An organic product made by processing and recycling agricultural residues.",
+    "processTitle": "From waste to product",
+    "processSubtitle": "How agricultural residues become compost that is ready to use.",
+    "calculatorTitle": "How much compost does your farm need?",
+    "calculatorSubtitle": "Enter your farm details and get a preliminary estimate of the quantity required.",
+    "calculatorCta": "Open the calculator",
+    "ctaTitle": "Have agricultural waste, or need compost?",
+    "ctaSubtitle": "Send us your request and our team will get in touch."
+  },
+  "about": {
+    "title": "About us",
+    "subtitle": "Mawaredna Mostaqbalna",
+    "aboutTitle": "About the Company",
+    "description": "Mawariduna Mustaqbaluna (Our Resources, Our Future) is a company specializing in the collection, processing, and recycling of agricultural and sugarcane waste to produce compost and organic fertilizers. The company aims to transform waste—previously a burden on farmers and the environment—into a beneficial organic resource that enriches the soil and boosts agricultural productivity.",
+    "visionTitle": "Vision",
+    "vision":"To become one of Egypt’s leading companies in the management and recycling of agricultural and sugarcane waste, and in the production of high-value organic products.",
+    "missionTitle": "Mission",
+    "mission":"Transforming agricultural waste into useful resources and products, achieving sustainable economic and environmental value, while providing reliable products and services to farmers and customers.",
+    "goalsTitle": "Our Goals",
+    "goals": [
+      "Collecting, recycling, and utilizing agricultural and sugarcane waste.",
+     "Transforming agricultural waste into products with economic and environmental value.",
+     "Producing high-quality plant-based compost that improves soil properties and agricultural productivity.",
+     "Providing integrated solutions for agricultural waste management and processing.",
+     "Supporting farmers through agricultural consulting, delivery services, and technical support.",
+     "Contributing to the reduction of agricultural waste and mitigating its environmental impact.",
+     "Supporting the circular economy and generating added value from waste.",
+     "Expanding into agricultural waste-based products and biofuels in the future.",
+     "Building partnerships with farmers, sugar mills, agricultural companies, and relevant institutions.",
+     "Creating green jobs and generating sustainable economic value."
+    ],
+    "complianceNote": "Every activity shown on this site is reviewed against the activities listed in the company's commercial register, licences and official approvals."
+  },
+  "services": {
+    "title": "What the company does",
+    "subtitle": "From collecting agricultural waste to producing organic products.",
+    "businessAreasTitle": "Our Resources, Our Future Company's areas of operation",
+    "businessAreas": [
+  {
+    "title": "Agricultural Waste Management",
+    "description": "Collection, transport, and aggregation of agricultural waste, particularly sugarcane waste."
+  },
+  {
+    "title": "Waste Recycling and Processing",
+    "description": "Sorting, preparing, shredding, and processing waste, and converting it into value-added products."
+  },
+  {
+    "title": "Plant-Based Compost Production",
+    "description": "Production and marketing of compost derived from sugarcane waste."
+  },
+  {
+    "title": "Operation and Management of Recycling Projects",
+    "description": "Managing and operating sites and projects for waste collection, recycling, and processing."
+  },
+  {
+    "title": "Agricultural Services and Consulting",
+    "description": "Providing technical guidance to farmers on the selection and use of compost."
+  },
+  {
+    "title": "Agricultural Product Delivery",
+    "description": "Providing transport and delivery services for compost to farms."
+  },
+  {
+    "title": "Integrated Waste Management Solutions",
+    "description": "Offering integrated solutions for the collection, transport, processing, and recycling of agricultural waste."
+  },
+  {
+    "title": "Organic Products and the Circular Economy",
+    "description": "Developing products that utilize waste to generate economic and environmental value."
+  },
+  {
+    "title": "Biofuels",
+    "description": "Future expansion into the production and development of biofuel products derived from agricultural waste."
+  }
+],
+    "servicesTitle": "Our Resources Company's Services, Our Future",
+    "services": [
+  {
+    "title": "Agricultural Compost Consulting",
+    "description": "Determining farm compost requirements based on soil, crop, and land area."
+  },
+  {
+    "title": "Compost Delivery to the Farm",
+    "description": "Transporting, loading, and unloading compost directly at the client's site."
+  },
+  {
+    "title": "Technical Support",
+    "description": "Providing guidance on application rates, methods, and timing for compost use."
+  },
+  {
+    "title": "Agricultural Waste Collection and Transport",
+    "description": "Organizing the collection and transport of waste, particularly sugarcane waste."
+  },
+  {
+    "title": "Waste Sorting, Preparation, and Processing",
+    "description": "Preparing waste for utilization and recycling."
+  },
+  {
+    "title": "Recycling Site Management and Operation",
+    "description": "Operating and managing agricultural waste processing and recycling projects and sites."
+  },
+  {
+    "title": "Integrated Agricultural Waste Management Solutions",
+    "description": "Providing comprehensive services ranging from collection and transport to processing and waste utilization."
+  }
+],
+    "complianceNote": "Activities are published as listed in the company's commercial register and official licences."
+  },
+  "compost": {
+  "title": "Mawaredna Mostaqbalna Compost",
+  "subtitle": "Natural, high-quality plant compost made from sugarcane residues",
+  "aboutTitle": "About the Compost",
+  "description": "Mawaredna Mostaqbalna Compost is a natural plant-based compost produced from sugarcane residues through appropriate processing and composting processes. It transforms agricultural waste into a useful organic resource that supports soil improvement, plant growth, and agricultural productivity.",
+  "imageAlt": "Mawaredna Mostaqbalna compost made from sugarcane residues",
+  "orderCta": "Request Compost",
+
+  "specificationsTitle": "General Specifications",
+  "specifications": [
+    {
+      "title": "Moisture Content",
+      "value": "35%",
+      "description": "Approximate moisture content"
+    },
+    {
+      "title": "Production Source",
+      "value": "Sugar Factories",
+      "description": "Sugarcane residues"
+    },
+    {
+      "title": "Source",
+      "value": "Sugarcane Residues",
+      "description": "Plant-based agricultural waste"
+    },
+    {
+      "title": "Compost Type",
+      "value": "100% Plant-Based",
+      "description": "Made from natural sources"
+    }
+  ],
+
+  "componentsTitle": "Compost Components",
+  "components": [
+    {
+      "title": "Plant Fibers",
+      "description": "Plant fibers from sugarcane that help improve soil properties."
+    },
+    {
+      "title": "Sugarcane Juice Extract",
+      "description": "Organic components rich in organic nutrients."
+    },
+    {
+      "title": "Naturally Decomposed Organic Matter",
+      "description": "Organic matter produced through decomposition and composting."
+    },
+    {
+      "title": "Beneficial Microorganisms",
+      "description": "Contains beneficial microorganisms that support biological soil activity."
+    }
+  ],
+
+  "nutrientsTitle": "Nutritional Elements and Organic Components",
+  "nutrients": [
+    {
+      "title": "Organic Matter",
+      "value": "45 - 55%",
+      "symbol": "Organic Matter"
+    },
+    {
+      "title": "Organic Carbon",
+      "value": "25 - 32%",
+      "symbol": "Organic Carbon"
+    },
+    {
+      "title": "Nitrogen",
+      "value": "0.8 - 1.5%",
+      "symbol": "N"
+    },
+    {
+      "title": "Phosphorus",
+      "value": "0.3 - 0.8%",
+      "symbol": "P"
+    },
+    {
+      "title": "Potassium",
+      "value": "0.5 - 1.2%",
+      "symbol": "K"
+    },
+    {
+      "title": "Fiber (Cellulose)",
+      "value": "15 - 25%",
+      "symbol": "Cellulose"
+    }
+  ],
+
+  "nutrientsNote": "The listed values are approximate and may vary depending on raw material characteristics, processing and composting conditions, and laboratory analysis.",
+
+  "benefitsTitle": "Benefits of Mawaredna Mostaqbalna Compost",
+  "benefits": [
+    "A sustainable and environmentally friendly product that contributes to recycling sugarcane residues and supporting sustainable agriculture.",
+    "Supports plant growth and provides a suitable environment for roots, helping improve crop productivity and quality.",
+    "Activates the soil biologically through beneficial microorganisms that help convert complex nutrients into forms that are easier for plants to absorb.",
+    "Increases the water-holding capacity of sandy soils, helping improve irrigation water availability.",
+    "Helps improve soil aeration, water infiltration, and drainage through its cellulose fiber content.",
+    "Helps improve soil properties and increase its organic matter content.",
+    "Contributes to reducing agricultural waste by utilizing it as a beneficial organic resource.",
+    "Appropriate composting and processing processes help eliminate weed seeds and reduce certain pathogens."
+  ],
+
+  "sourceTitle": "Compost Source",
+  "source": "The compost is produced from agricultural residues, particularly sugarcane residues generated by sugar factories, transforming agricultural waste into an organic product that benefits soil and agriculture.",
+
+  "ctaTitle": "Choose Mawaredna Mostaqbalna Compost",
+  "ctaDescription": "Invest in healthier soil and more sustainable agriculture. Contact us to determine the appropriate quantity for your farm and learn about delivery and technical support options."
+},
+  "process": {
+    "title": "From waste to product",
+    "subtitle": "The stages from collecting agricultural residues to using compost in the field.",
+    "stageLabel": "Stage",
+    "stages": {
+      "residues": "Agricultural residues",
+      "collection": "Collection",
+      "transport": "Transport",
+      "aggregation": "Aggregation",
+      "processing": "Processing",
+      "fermentation": "Fermentation",
+      "turning": "Turning",
+      "finishing": "Finishing",
+      "compost": "Compost",
+      "field-use": "Agricultural use"
+    }
+  },
+  "sugarcane": {
+    "title": "Sugarcane residues",
+    "subtitle": "Bringing sugarcane by-products into the recycling and processing system.",
+    "introTitle": "Why sugarcane residues?",
+    "introBody": "Growing and milling sugarcane leaves behind large volumes of plant residues. The company collects these residues and feeds them into its processing and recycling system to produce organic products and compost, instead of letting them go to waste.",
+    "stepsTitle": "How we handle them",
+    "step1": "Collection from growing and milling sites.",
+    "step2": "Sorting, initial preparation and size reduction.",
+    "step3": "Blending into the compost windrows with other plant residues.",
+    "step4": "Processing, fermentation and turning through to the finished product.",
+    "cta": "Request sugarcane residue collection"
+  },
+  "requests": {
+    "title": "Services for companies and farms",
+    "subtitle": "Send your request and our team will review it and get back to you.",
+    "formTitle": "Request form",
+    "types": {
+      "compost-supply": "Compost supply request",
+      "farm-quantities": "Quantities for a farm",
+      "waste-collection": "Agricultural waste collection",
+      "waste-processing": "Waste processing and recycling",
+      "project-study": "Project requirements study",
+      "partnership": "Cooperation on a recycling project",
+      "quote": "Price quote",
+      "general": "General enquiry"
+    },
+    "fields": {
+      "name": "Name",
+      "phone": "Phone number",
+      "email": "Email",
+      "company": "Company or farm name",
+      "governorate": "Governorate",
+      "type": "Request type",
+      "message": "Request details",
+      "messagePlaceholder": "Tell us about quantities, timing, location and anything else we should know."
+    },
+    "validation": {
+      "name": "Please enter a name of at least two characters.",
+      "phone": "Please enter a valid phone number.",
+      "email": "Please enter a valid email address.",
+      "type": "Please choose a request type."
+    },
+    "success": "Your request has been received. Our team will contact you shortly.",
+    "error": "We could not send your request. Please try again, or call us instead.",
+    "privacyNote": "Your details are used only to contact you about this request."
+  },
+  "calculator": {
+    "title": "Farm requirement calculator",
+    "subtitle": "Get a preliminary estimate of how much compost your farm needs.",
+    "area": "Farm area (feddan)",
+    "areaPlaceholder": "e.g. 25",
+    "crop": "Crop type",
+    "soil": "Soil type",
+    "governorate": "Governorate",
+    "selectPlaceholder": "Choose...",
+    "resultTitle": "Preliminary estimate",
+    "resultTons": "Quantity in tonnes",
+    "resultCubicMeters": "Quantity in cubic metres",
+    "resultPerFeddan": "Rate per feddan",
+    "resultBags": "Number of bags (50 kg)",
+    "ton": "t",
+    "cubicMeter": "m³",
+    "bag": "bags",
+    "tonPerFeddan": "t/feddan",
+    "requestQuoteCta": "Send this as a quote request",
+    "recalculate": "Calculate again",
+    "errorArea": "Please enter a valid area in feddan.",
+    "errorSelect": "Please choose a crop type and a soil type.",
+    "errorGeneric": "We could not calculate the estimate. Please try again."
+  },
+  "projects": {
+    "title": "Projects and track record",
+    "subtitle": "Examples of agricultural waste collection, processing and recycling projects.",
+    "location": "Location",
+    "wasteType": "Waste type",
+    "wasteVolume": "Waste volume",
+    "stages": "Work stages",
+    "finalProduct": "Final product",
+    "partners": "Participating organisations",
+    "empty": "Project and track-record details are being prepared for publication."
+  },
+  "sustainability": {
+    "title": "Sustainability and the circular economy",
+    "subtitle": "Turning agricultural waste from a burden into a usable resource.",
+    "body": "The company's approach is to return organic matter to the agricultural production cycle, so crop residues do not end up as a burden on the farm and the environment but come back to the land as a useful organic product.",
+    "loopTitle": "The loop",
+    "loop1": "The land produces a crop",
+    "loop2": "The crop leaves plant residues",
+    "loop3": "We collect, process and recycle the residues",
+    "loop4": "Compost and organic fertilisers are produced",
+    "loop5": "Organic matter returns to the land",
+    "claimsNote": "No environmental or technical claim is published unless it is backed by documents, analyses and official approvals."
+  },
+  "partners": {
+    "title": "Clients and partners",
+    "subtitle": "Organisations, companies, farms and institutions we work with.",
+    "empty": "Client and partner logos are published once the necessary approvals are in place.",
+    "consentNote": "Logos are published only after written consent from the organisation concerned."
+  },
+  "gallery": {
+    "title": "Photo and video gallery",
+    "subtitle": "Real photographs from our work sites, equipment and production operations.",
+    "empty": "The photo and video gallery is being prepared for publication.",
+    "categories": {
+      "all": "All",
+      "work-sites": "Work sites",
+      "equipment": "Equipment",
+      "collection": "Collection",
+      "aggregation": "Aggregation",
+      "compost-windrows": "Compost windrows",
+      "turning": "Turning",
+      "processing": "Processing",
+      "final-product": "Final product",
+      "supply": "Supply",
+      "farms": "Farms",
+      "team": "Our team"
+    }
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "We welcome your enquiries and requests.",
+    "infoTitle": "Contact details",
+    "formTitle": "Send an enquiry",
+    "socialTitle": "Social media",
+    "viewOnMap": "View on map",
+    "mapTitle": "Location",
+    "workingHours": "Working hours",
+    "workingHoursValue": "{from} to {to}",
+    "pending": "Contact details will be added once they are confirmed."
+  },
+  "footer": {
+    "quickLinks": "Quick links",
+    "services": "What we do",
+    "About The Company": "About The Company",
+    "Our Services": "Our Services",
+    "contact": "Contact",
+    "rights": "All rights reserved",
+    "commercialRegister": "Commercial register",
+    "taxCard": "Tax card"
+  },
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you are looking for is not available, or has moved.",
+    "genericTitle": "Something went wrong",
+    "genericBody": "This section could not be displayed right now. Please try again.",
+    "retry": "Try again",
+    "contentUnavailable": "Content could not be loaded from the server."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Manage site content and customer requests",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "loginTitle": "Sign in to the dashboard",
+    "loginSubtitle": "This area is for staff only.",
+    "loginError": "Those credentials were not accepted.",
+    "loginRateLimited": "Too many attempts. Wait a minute and try again.",
+    "loginUnreachable": "Could not reach the server.",
+    "signedInAs": "Signed in as",
+    "backToSite": "Back to the site",
+    "nav": {
+      "overview": "Overview",
+      "leads": "Requests and enquiries",
+      "content": "Content",
+      "api": "API explorer"
+    },
+    "overview": {
+      "title": "Overview",
+      "totalLeads": "Total requests",
+      "newLeads": "New",
+      "inProgress": "In progress",
+      "quoted": "Quoted",
+      "closed": "Closed",
+      "byType": "Requests by type",
+      "recent": "Latest requests",
+      "viewAll": "View all",
+      "noLeads": "No requests yet."
+    },
+    "leads": {
+      "title": "Requests and enquiries",
+      "subtitle": "Everything submitted through the site forms and the farm calculator.",
+      "filterStatus": "Status",
+      "filterType": "Request type",
+      "search": "Search by name or phone",
+      "searchAction": "Search",
+      "clear": "Clear filters",
+      "empty": "No matching requests.",
+      "name": "Name",
+      "phone": "Phone",
+      "type": "Type",
+      "governorate": "Governorate",
+      "status": "Status",
+      "date": "Date",
+      "message": "Details",
+      "company": "Company / farm",
+      "email": "Email",
+      "calculation": "Calculator estimate",
+      "notes": "Internal notes",
+      "notesPlaceholder": "Notes for the team (never shown to the customer).",
+      "save": "Save",
+      "saving": "Saving...",
+      "saved": "Saved",
+      "saveError": "Could not save. Please try again.",
+      "details": "Details",
+      "area": "Area",
+      "feddan": "feddan",
+      "estimated": "Estimated quantity",
+      "ton": "t",
+      "showing": "Showing {count} of {total}"
+    },
+    "statuses": {
+      "all": "All statuses",
+      "new": "New",
+      "in-progress": "In progress",
+      "quoted": "Quoted",
+      "closed": "Closed"
+    },
+    "content": {
+      "title": "Content",
+      "subtitle": "A summary of what is currently published on the site.",
+      "collection": "Section",
+      "published": "Published",
+      "pending": "Awaiting approval",
+      "total": "Total",
+      "services": "Lines of work",
+      "products": "Products",
+      "projects": "Projects",
+      "partners": "Clients and partners",
+      "media": "Gallery",
+      "editNote": "Creating and editing currently happens through the API — use the API explorer or Swagger.",
+      "approvalNote": "Partner logos are only published once the record is marked approved.",
+      "openApi": "Open the API explorer"
+    },
+    "api": {
+      "title": "API explorer",
+      "subtitle": "Run the admin-protected API calls using your current session.",
+      "endpoint": "Endpoint",
+      "method": "Method",
+      "run": "Run",
+      "running": "Running...",
+      "response": "Response",
+      "status": "Status",
+      "selectEndpoint": "Pick an endpoint and press Run.",
+      "swaggerNote": "For full documentation and write calls, open Swagger at {url}",
+      "protectedNote": "Every call here goes through your admin session; the access token never reaches the browser."
+    }
+  }
+}

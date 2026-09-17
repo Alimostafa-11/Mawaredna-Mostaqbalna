@@ -1,0 +1,121 @@
+# Local development stack: MongoDB, MinIO (an S3-compatible store), the NestJS
+# API and the Next.js site.
+#
+#   cp apps/api/.env.example apps/api/.env
+#   cp apps/web/.env.example apps/web/.env.local
+#   docker compose up -d
+#   docker compose exec api node dist/seed/seed.js
+#
+# MinIO stands in for S3 so uploads can be exercised without an AWS account.
+# In AWS you drop the minio service and point S3_BUCKET at a real bucket.
+
+name: mawaredna
+
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: agri
+    ports:
+      # 27018 on the host: 27017 is often already taken by another local
+      # Mongo. Inside the compose network the API still uses mongo:27017.
+      - '27018:27017'
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', 'db.adminCommand("ping")']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  minio:
+    image: quay.io/minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # Creates the media bucket once MinIO is up, then exits.
+  minio-init:
+    image: quay.io/minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 minioadmin minioadmin &&
+      mc mb --ignore-existing local/mawaredna-media &&
+      mc anonymous set download local/mawaredna-media
+      "
+    restart: 'no'
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      API_PREFIX: api
+      # Local stack runs production-like settings but keeps the docs on.
+      ENABLE_SWAGGER: 'true'
+      CORS_ORIGINS: http://localhost:3000
+      MONGODB_URI: mongodb://root:example@mongo:27017/agri?authSource=admin
+      JWT_SECRET: local-development-secret-change-me-please-32
+      JWT_EXPIRES_IN: 7d
+      ADMIN_EMAIL: admin@mawaredna.com
+      ADMIN_PASSWORD: ChangeMe123!
+      AWS_REGION: eu-central-1
+      S3_BUCKET: mawaredna-media
+      S3_ENDPOINT: http://minio:9000
+      S3_FORCE_PATH_STYLE: 'true'
+      S3_PUBLIC_URL: http://localhost:9000/mawaredna-media
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadmin
+    ports:
+      - '4000:4000'
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # Reached from the browser, so it must be the host-visible URL.
+        NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+        NEXT_PUBLIC_MEDIA_HOST: localhost
+        # Reached from inside the compose network during SSR.
+        API_URL: http://api:4000/api/v1
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      API_URL: http://api:4000/api/v1
+    ports:
+      - '3000:3000'
+
+volumes:
+  mongo-data:
+  minio-data:
