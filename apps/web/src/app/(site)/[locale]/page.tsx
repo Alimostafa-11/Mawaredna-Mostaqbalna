@@ -7,6 +7,7 @@ import { localized } from '@/lib/utils';
 import { ProcessChain } from '@/components/ui/process-chain';
 import { Section, SectionHeading } from '@/components/ui/section';
 import { ServiceIcon } from '@/components/ui/service-icon';
+import Image from 'next/image';
 
 export default async function HomePage({
   params,
@@ -33,48 +34,60 @@ export default async function HomePage({
   return (
     <>
       {/* Hero */}
-      <div className="relative overflow-hidden border-b border-[var(--border)] bg-brand-50 dark:bg-brand-950/40">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--color-brand-200),transparent_60%)] opacity-50 dark:opacity-20"
-        />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-300 bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-brand-700 dark:border-brand-800 dark:text-brand-300">
-              <Leaf aria-hidden className="size-3.5" />
-              {settings?.slogan
-                ? localized(settings.slogan, typedLocale)
-                : t('heroTitle')}
-            </span>
 
-            <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              {t('heroTitle')}
-            </h1>
+      <div className="relative overflow-hidden mt-5 border-b border-[var(--border)]">
+  {/* Background Image */}
+   <Image
+    src="/home-logo.jpeg"
+    alt={t('heroImageAlt')}
+    fill
+    priority
+    sizes="100vw"
+    className="scale-110 object-cover blur-[1px]"
+  />
 
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-pretty text-[var(--muted)]">
-              {t('heroSubtitle')}
-            </p>
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-black/50" />
 
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                href="/compost"
-                className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-700"
-              >
-                {t('heroPrimaryCta')}
-                <Arrow aria-hidden className="size-4" />
-              </Link>
+  {/* Content */}
+  <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <div className="max-w-3xl">
+      <span className="inline-flex items-center gap-2 rounded-full border border-brand-300 bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-brand-700 dark:border-brand-800 dark:text-brand-300">
+        <Leaf aria-hidden className="size-3.5" />
 
-              <Link
-                href="/request"
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-6 py-3 font-semibold transition-colors hover:border-brand-500"
-              >
-                {t('heroSecondaryCta')}
-              </Link>
-            </div>
-          </div>
-        </div>
+        {settings?.slogan
+          ? localized(settings.slogan, typedLocale)
+          : t('heroTitle')}
+      </span>
+
+      <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-balance text-white sm:text-3xl lg:text-4xl">
+        {t('heroTitle')}
+      </h1>
+
+      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-pretty text-white/90">
+        {t('heroSubtitle')}
+      </p>
+
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Link
+          href="/compost"
+          className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-700"
+        >
+          {t('heroPrimaryCta')}
+          <Arrow aria-hidden className="size-4" />
+        </Link>
+
+        <Link
+          href="/request"
+          className="inline-flex items-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+        >
+          {t('heroSecondaryCta')}
+        </Link>
       </div>
+    </div>
+  </div>
+</div>
 
       {/* Company introduction */}
       {settings?.about && (

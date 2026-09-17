@@ -1,8 +1,8 @@
 {
   "meta": {
-    "siteName": "Mawaredna Mostaqbalna",
+    "siteName": "Mawaredna Mostakbalna",
     "tagline": "From our waste, we build our future",
-    "description": "Mawaredna Mostaqbalna collects, processes and recycles agricultural and sugarcane residues into compost and organic fertilisers."
+    "description": "Mawaredna Mostakbalna collects, processes and recycles agricultural and sugarcane residues into compost and organic fertilisers."
   },
   "nav": {
     "home": "Home",
@@ -51,7 +51,7 @@
     "noResults": "There is nothing to show here yet."
   },
   "home": {
-    "heroTitle": "From our waste, we build our future",
+    "heroTitle": "We are building a future from agricultural waste",
     "heroSubtitle": "We collect agricultural and sugarcane residues, process them and recycle them into compost and organic fertilisers.",
     "heroPrimaryCta": "Order compost",
     "heroSecondaryCta": "Services for farms and companies",
