@@ -12,7 +12,6 @@ import {
   formatBytes,
   kindOf,
   maxBytesFor,
-  titleFromFileName,
   uploadGalleryItem,
   type UploadFailure,
 } from '@/lib/media-upload';
@@ -107,7 +106,7 @@ export function MediaUploader({ nextOrder }: { nextOrder: number }) {
         file,
         previewUrl: URL.createObjectURL(file),
         kind,
-        title: titleFromFileName(file.name),
+        title: '',
         category: 'work-sites',
         status: 'pending',
         progress: 0,
@@ -148,11 +147,6 @@ export function MediaUploader({ nextOrder }: { nextOrder: number }) {
   async function uploadAll() {
     const pending = queue.filter((item) => item.status !== 'done');
 
-    if (pending.some((item) => !item.title.trim())) {
-      toast.danger(t('errors.titleRequired'));
-      return;
-    }
-
     setIsUploading(true);
     let uploaded = 0;
 
@@ -163,7 +157,7 @@ export function MediaUploader({ nextOrder }: { nextOrder: number }) {
         await uploadGalleryItem(
           {
             file: item.file,
-            title: { ar: item.title.trim() },
+            ...(item.title.trim() ? { title: { ar: item.title.trim() } } : {}),
             category: item.category,
             order: nextOrder + index,
             isActive: publishNow,

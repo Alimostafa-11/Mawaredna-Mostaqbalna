@@ -1,4 +1,11 @@
-import type { InquiryType, Localized, MediaCategory, MediaItem, MediaKind } from './types';
+import type {
+  InquiryType,
+  Localized,
+  MediaCategory,
+  MediaItem,
+  MediaKind,
+  OptionalLocalized,
+} from './types';
 
 export type { Paginated } from './types';
 export { MEDIA_CATEGORIES } from './types';
@@ -77,7 +84,6 @@ export interface ContentSummaryRow {
  * weight, the publication flag and the S3 keys behind the URLs.
  */
 export interface MediaRecord extends MediaItem {
-  caption?: Localized;
   storageKey: string;
   thumbnailStorageKey: string;
   order: number;
@@ -88,14 +94,18 @@ export interface MediaRecord extends MediaItem {
 
 /** Body of `POST /media`, written by the uploader once the bytes are in S3. */
 export interface CreateMediaPayload {
-  title: Localized;
+  /** Optional, like every other label on a gallery item. */
+  title?: OptionalLocalized;
   kind: MediaKind;
+  /** The one field that is not optional - it is filled by the uploader from
+   *  the S3 response, never typed, and a record without it has nothing to
+   *  show. */
   url: string;
   storageKey: string;
   thumbnailUrl?: string;
   thumbnailStorageKey?: string;
   category: MediaCategory;
-  caption?: Localized;
+  caption?: OptionalLocalized;
   order?: number;
   isActive?: boolean;
 }

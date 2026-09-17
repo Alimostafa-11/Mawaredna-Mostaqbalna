@@ -56,41 +56,53 @@ export function GalleryGrid({ items }: { items: MediaItem[] }) {
 
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((item) => (
-          <li
-            key={item._id}
-            className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"
-          >
-            <div className="relative aspect-4/3">
-              {item.kind === 'video' ? (
-                <video
-                  src={item.url}
-                  poster={item.thumbnailUrl || undefined}
-                  controls
-                  preload="none"
-                  className="size-full object-cover"
-                />
-              ) : (
-                <Image
-                  src={item.url}
-                  alt={localized(item.title, locale)}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              )}
-            </div>
-
-            <div className="p-4">
-              <h3 className="text-sm font-medium">{localized(item.title, locale)}</h3>
-              {item.caption && (
-                <p className="mt-1 text-xs text-[var(--muted)]">
-                  {localized(item.caption, locale)}
-                </p>
-              )}
-            </div>
-          </li>
+          <GalleryTile key={item._id} item={item} locale={locale} />
         ))}
       </ul>
     </>
+  );
+}
+
+/**
+ * One gallery item.
+ *
+ * Titles and captions are optional - a batch shot at a work site is usually
+ * published unnamed - so the text strip under the media is dropped entirely
+ * rather than rendered as an empty heading.
+ */
+function GalleryTile({ item, locale }: { item: MediaItem; locale: Locale }) {
+  const title = localized(item.title, locale);
+  const caption = localized(item.caption, locale);
+
+  return (
+    <li className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+      <div className="relative aspect-4/3">
+        {item.kind === 'video' ? (
+          <video
+            src={item.url}
+            poster={item.thumbnailUrl || undefined}
+            controls
+            preload="none"
+            className="size-full object-cover"
+          />
+        ) : (
+          /* An unnamed photo is decorative, and alt="" is how that is said. */
+          <Image
+            src={item.url}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
+          />
+        )}
+      </div>
+
+      {(title || caption) && (
+        <div className="p-4">
+          {title && <h3 className="text-sm font-medium">{title}</h3>}
+          {caption && <p className="mt-1 text-xs text-[var(--muted)]">{caption}</p>}
+        </div>
+      )}
+    </li>
   );
 }

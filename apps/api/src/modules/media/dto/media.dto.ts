@@ -8,14 +8,15 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { LocalizedDto } from '../../../common/dto/localized.dto';
+import { OptionalLocalizedDto } from '../../../common/dto/localized.dto';
 import { MEDIA_CATEGORIES } from '../media.schema';
 
 export class CreateMediaDto {
-  @ApiProperty({ type: LocalizedDto })
+  @ApiPropertyOptional({ type: OptionalLocalizedDto })
+  @IsOptional()
   @ValidateNested()
-  @Type(() => LocalizedDto)
-  title!: LocalizedDto;
+  @Type(() => OptionalLocalizedDto)
+  title?: OptionalLocalizedDto;
 
   @ApiPropertyOptional({ enum: ['image', 'video'], default: 'image' })
   @IsOptional()
@@ -46,11 +47,11 @@ export class CreateMediaDto {
   @IsIn(MEDIA_CATEGORIES as unknown as string[])
   category?: (typeof MEDIA_CATEGORIES)[number];
 
-  @ApiPropertyOptional({ type: LocalizedDto })
+  @ApiPropertyOptional({ type: OptionalLocalizedDto })
   @IsOptional()
   @ValidateNested()
-  @Type(() => LocalizedDto)
-  caption?: LocalizedDto;
+  @Type(() => OptionalLocalizedDto)
+  caption?: OptionalLocalizedDto;
 
   @ApiPropertyOptional()
   @IsOptional()
