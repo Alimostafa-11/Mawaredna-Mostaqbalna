@@ -19,13 +19,18 @@ import {
  * the site" is almost always what is actually wanted - deleting also drops the
  * file from the bucket and cannot be undone.
  */
+/** Both languages blank means "no label", which the API stores as null. */
+function localizedOrNull(ar: string, en: string) {
+  return ar.trim() || en.trim() ? { ar: ar.trim(), en: en.trim() } : null;
+}
+
 export function MediaCard({ item }: { item: MediaRecord }) {
   const t = useTranslations('dashboard.media');
   const tCategories = useTranslations('gallery.categories');
   const router = useRouter();
 
-  const [titleAr, setTitleAr] = useState(item.title.ar);
-  const [titleEn, setTitleEn] = useState(item.title.en ?? '');
+  const [titleAr, setTitleAr] = useState(item.title?.ar ?? '');
+  const [titleEn, setTitleEn] = useState(item.title?.en ?? '');
   const [captionAr, setCaptionAr] = useState(item.caption?.ar ?? '');
   const [captionEn, setCaptionEn] = useState(item.caption?.en ?? '');
   const [category, setCategory] = useState<MediaCategory>(item.category);
@@ -36,8 +41,8 @@ export function MediaCard({ item }: { item: MediaRecord }) {
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   const isDirty =
-    titleAr !== item.title.ar ||
-    titleEn !== (item.title.en ?? '') ||
+    titleAr !== (item.title?.ar ?? '') ||
+    titleEn !== (item.title?.en ?? '') ||
     captionAr !== (item.caption?.ar ?? '') ||
     captionEn !== (item.caption?.en ?? '') ||
     category !== item.category ||
@@ -54,22 +59,14 @@ export function MediaCard({ item }: { item: MediaRecord }) {
   }
 
   async function save() {
-    if (!titleAr.trim()) {
-      toast.danger(t('errors.titleRequired'));
-      return;
-    }
-
     setIsSaving(true);
 
     try {
       await patch({
-        title: { ar: titleAr.trim(), en: titleEn.trim() },
-        // An empty Arabic caption would fail the API's MinLength(1), but
-        // omitting the field would silently keep the old caption - so a
-        // cleared one is sent as null and actually clears.
-        caption: captionAr.trim()
-          ? { ar: captionAr.trim(), en: captionEn.trim() }
-          : null,
+        // A field cleared in the form is sent as null rather than omitted,
+        // which is what makes clearing it actually stick.
+        title: localizedOrNull(titleAr, titleEn),
+        caption: localizedOrNull(captionAr, captionEn),
         category,
         order: Number(order) || 0,
       });
@@ -135,7 +132,7 @@ export function MediaCard({ item }: { item: MediaRecord }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={item.url}
-            alt={item.title.ar}
+            alt={item.title?.ar ?? ''}
             loading="lazy"
             className="size-full object-cover"
           />

@@ -1,5 +1,5 @@
 import type { Locale } from '@/i18n/routing';
-import type { Localized } from './types';
+import type { Localized, OptionalLocalized } from './types';
 
 /**
  * Reads a bilingual field for the active locale.
@@ -7,10 +7,13 @@ import type { Localized } from './types';
  * Arabic is the source of truth for this site, so an English page falls back
  * to Arabic rather than rendering an empty slot when a translation is missing.
  */
-export function localized(value: Localized | undefined, locale: Locale): string {
+export function localized(
+  value: Localized | OptionalLocalized | undefined,
+  locale: Locale,
+): string {
   if (!value) return '';
-  if (locale === 'en') return value.en?.trim() || value.ar;
-  return value.ar;
+  if (locale === 'en') return value.en?.trim() || value.ar || '';
+  return value.ar || '';
 }
 
 /** Picks the right label from the API's flat `labelAr` / `labelEn` option shape. */

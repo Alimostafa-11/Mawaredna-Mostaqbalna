@@ -4,6 +4,12 @@ export interface Localized {
   en?: string;
 }
 
+/** Bilingual field where neither language is guaranteed - gallery labels. */
+export interface OptionalLocalized {
+  ar?: string;
+  en?: string;
+}
+
 export interface Paginated<T> {
   items: T[];
   total: number;
@@ -105,12 +111,13 @@ export type MediaKind = 'image' | 'video';
 
 export interface MediaItem {
   _id: string;
-  title: Localized;
+  /** Optional: photos are often published straight off a phone, unnamed. */
+  title?: OptionalLocalized;
   kind: MediaKind;
   url: string;
   thumbnailUrl: string;
   category: MediaCategory;
-  caption?: Localized;
+  caption?: OptionalLocalized;
 }
 
 export interface SocialLinks {

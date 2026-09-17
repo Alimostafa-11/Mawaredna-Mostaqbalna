@@ -196,7 +196,7 @@ has no localized URLs, no sitemap entry and sends `noindex`.
 | `/dashboard` | Lead counts by status and type, plus the latest requests |
 | `/dashboard/leads` | Inbox: filter by status, type and free text; expand a lead for the full record; change status and keep internal notes |
 | `/dashboard/content` | What is published per collection, and what is held back awaiting approval |
-| `/dashboard/media` | Upload gallery photos and videos, name and categorise them, reorder, hide or delete |
+| `/dashboard/media` | Upload gallery photos and videos, optionally name and categorise them, reorder, hide or delete |
 | `/dashboard/api` | Run the admin-protected GET endpoints and read the raw JSON |
 
 Seeded credentials are `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the API env
@@ -216,7 +216,17 @@ enforces its guard on every route.
 ### Gallery uploads
 
 `/dashboard/media` is the one content type with a full editor. Files are
-staged in the browser, named and categorised, then uploaded one at a time:
+staged in the browser, optionally named and categorised, then uploaded one at
+a time.
+
+**Nothing on a gallery item is required.** Name and caption may be left blank
+in either language, or filled in only in English — a batch shot at a work site
+can be published as-is and labelled later. An item with no text renders as just
+the photo or video, with no empty caption strip. The other collections
+(services, products, projects, partners) still require their Arabic labels;
+only the gallery uses the relaxed variant.
+
+The steps:
 
 1. `POST /uploads/presign` returns a short-lived `uploadUrl` and object key
 2. The **browser** PUTs the file straight to S3 — the bytes never pass through

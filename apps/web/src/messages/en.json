@@ -521,7 +521,7 @@
       },
       "upload": {
         "title": "Upload new files",
-        "subtitle": "Drop files here or pick them, then give each one a name and a category before uploading.",
+        "subtitle": "Drop files here or pick them, then upload. Everything is optional and can be added or changed afterwards.",
         "drop": "Drop photos and videos here",
         "browse": "Choose files",
         "accepted": "Accepted: JPG, PNG, WebP and AVIF for photos, MP4 and WebM for video. Up to 15 MB per photo and 200 MB per video.",
@@ -533,7 +533,7 @@
         "uploaded": "Uploaded {count} file(s)."
       },
       "fields": {
-        "titleAr": "Name in Arabic",
+        "titleAr": "Name in Arabic (optional)",
         "titleArPlaceholder": "e.g. Turning the compost windrows",
         "titleEn": "Name in English (optional)",
         "captionAr": "Short caption in Arabic (optional)",
@@ -562,8 +562,7 @@
         "cancel": "Cancel"
       },
       "errors": {
-        "titleRequired": "Please give every file an Arabic name before uploading.",
-        "typeNamed": "\"{name}\" is in an unsupported format. Please convert it to JPG, PNG, WebP or MP4.",
+          "typeNamed": "\"{name}\" is in an unsupported format. Please convert it to JPG, PNG, WebP or MP4.",
         "sizeNamed": "\"{name}\" is larger than the allowed limit ({max}).",
         "type": "Unsupported file format.",
         "size": "The file is larger than the allowed limit.",

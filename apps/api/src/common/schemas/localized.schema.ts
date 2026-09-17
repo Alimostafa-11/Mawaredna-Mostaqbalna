@@ -18,3 +18,25 @@ export class Localized {
 }
 
 export const LocalizedSchema = SchemaFactory.createForClass(Localized);
+
+/**
+ * Same shape, but with nothing required.
+ *
+ * Editorial collections describe themselves in words, so their labels are
+ * mandatory. A gallery photo does not: a batch comes off a phone at a work
+ * site and is published as-is, and forcing a name on each one only produces
+ * captions nobody meant to write.
+ */
+@Schema({ _id: false })
+export class OptionalLocalized {
+  @ApiProperty({ example: 'كمبوست عضوي', required: false })
+  @Prop({ type: String, required: false, trim: true, default: '' })
+  ar?: string;
+
+  @ApiProperty({ example: 'Organic compost', required: false })
+  @Prop({ type: String, required: false, trim: true, default: '' })
+  en?: string;
+}
+
+export const OptionalLocalizedSchema =
+  SchemaFactory.createForClass(OptionalLocalized);

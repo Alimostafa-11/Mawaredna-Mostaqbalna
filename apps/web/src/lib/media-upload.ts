@@ -69,11 +69,6 @@ export function maxBytesFor(kind: MediaKind): number {
   return kind === 'video' ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
 }
 
-/** Seeds the Arabic title field so a batch is not left with empty names. */
-export function titleFromFileName(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
-}
-
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
@@ -239,7 +234,8 @@ async function createMediaRecord(payload: CreateMediaPayload): Promise<MediaReco
 
 export interface GalleryUploadInput {
   file: File;
-  title: CreateMediaPayload['title'];
+  /** Optional, as on the record itself. */
+  title?: CreateMediaPayload['title'];
   caption?: CreateMediaPayload['caption'];
   category: CreateMediaPayload['category'];
   order?: number;

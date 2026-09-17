@@ -1,6 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Localized, LocalizedSchema } from '../../common/schemas/localized.schema';
+import {
+  OptionalLocalized,
+  OptionalLocalizedSchema,
+} from '../../common/schemas/localized.schema';
 
 export type MediaDocument = HydratedDocument<MediaItem>;
 
@@ -25,8 +28,9 @@ export type MediaCategory = (typeof MEDIA_CATEGORIES)[number];
 
 @Schema({ timestamps: true, collection: 'media' })
 export class MediaItem {
-  @Prop({ type: LocalizedSchema, required: true })
-  title!: Localized;
+  /** Optional: a photo can be published without a name in either language. */
+  @Prop({ type: OptionalLocalizedSchema, required: false })
+  title?: OptionalLocalized;
 
   @Prop({ type: String, enum: ['image', 'video'], default: 'image', index: true })
   kind!: MediaKind;
@@ -49,8 +53,8 @@ export class MediaItem {
   @Prop({ type: String, enum: MEDIA_CATEGORIES, default: 'work-sites', index: true })
   category!: MediaCategory;
 
-  @Prop({ type: LocalizedSchema })
-  caption?: Localized;
+  @Prop({ type: OptionalLocalizedSchema, required: false })
+  caption?: OptionalLocalized;
 
   @Prop({ type: Number, default: 0, index: true })
   order!: number;
