@@ -66,6 +66,7 @@ export interface ContentSummaryRow {
   /** Records held back pending approval; undefined when not applicable. */
   pending?: number;
   note?: 'approval';
+  
 }
 
 export interface PartnerRecord {
