@@ -456,6 +456,7 @@
       "overview": "Overview",
       "leads": "Requests and enquiries",
       "content": "Content",
+      "media": "Gallery",
       "api": "API explorer"
     },
     "overview": {
@@ -509,6 +510,69 @@
       "quoted": "Quoted",
       "closed": "Closed"
     },
+    "media": {
+      "title": "Gallery",
+      "subtitle": "Upload photos and videos of the work sites and production, and they appear straight on the gallery page.",
+      "orderNote": "Ordering is ascending: the lower the number, the earlier the item appears in the gallery.",
+      "viewPublicGallery": "Preview the gallery page",
+      "kinds": {
+        "image": "Photo",
+        "video": "Video"
+      },
+      "upload": {
+        "title": "Upload new files",
+        "subtitle": "Drop files here or pick them, then give each one a name and a category before uploading.",
+        "drop": "Drop photos and videos here",
+        "browse": "Choose files",
+        "accepted": "Accepted: JPG, PNG, WebP and AVIF for photos, MP4 and WebM for video. Up to 15 MB per photo and 200 MB per video.",
+        "remove": "Remove from the list",
+        "clear": "Clear the list",
+        "publishNow": "Publish to the gallery as soon as the upload finishes",
+        "start": "Upload {count} file(s)",
+        "uploading": "Uploading...",
+        "uploaded": "Uploaded {count} file(s)."
+      },
+      "fields": {
+        "titleAr": "Name in Arabic",
+        "titleArPlaceholder": "e.g. Turning the compost windrows",
+        "titleEn": "Name in English (optional)",
+        "captionAr": "Short caption in Arabic (optional)",
+        "captionEn": "Short caption in English (optional)",
+        "category": "Category",
+        "order": "Order"
+      },
+      "list": {
+        "title": "Published files",
+        "empty": "No files in this category yet.",
+        "counts": "{total} file(s) · {hidden} hidden",
+        "hiddenBadge": "Hidden",
+        "save": "Save",
+        "saving": "Saving...",
+        "saved": "Saved",
+        "saveError": "Could not save. Please try again.",
+        "hide": "Hide from the site",
+        "show": "Show on the site",
+        "hidden": "The file is now hidden from the gallery.",
+        "shown": "The file is now visible in the gallery.",
+        "delete": "Delete",
+        "confirmDelete": "Confirm permanent delete",
+        "deleting": "Deleting...",
+        "deleted": "File deleted, along with its stored copy.",
+        "deleteError": "Could not delete. Please try again.",
+        "cancel": "Cancel"
+      },
+      "errors": {
+        "titleRequired": "Please give every file an Arabic name before uploading.",
+        "typeNamed": "\"{name}\" is in an unsupported format. Please convert it to JPG, PNG, WebP or MP4.",
+        "sizeNamed": "\"{name}\" is larger than the allowed limit ({max}).",
+        "type": "Unsupported file format.",
+        "size": "The file is larger than the allowed limit.",
+        "presign": "Could not prepare the upload. Please try again.",
+        "transfer": "The file could not be sent to storage. Check the connection and try again.",
+        "record": "The file uploaded but its details could not be saved. Please try again.",
+        "storage": "S3 storage is not configured on the server. Please ask the technical team."
+      }
+    },
     "content": {
       "title": "Content",
       "subtitle": "A summary of what is currently published on the site.",
@@ -521,7 +585,7 @@
       "projects": "Projects",
       "partners": "Clients and partners",
       "media": "Gallery",
-      "editNote": "Creating and editing currently happens through the API — use the API explorer or Swagger.",
+      "editNote": "Gallery photos and videos are managed from the Gallery page. The remaining sections are still edited through the API — use the API explorer or Swagger.",
       "approvalNote": "Partner logos are only published once the record is marked approved.",
       "openApi": "Open the API explorer"
     },

@@ -42,6 +42,10 @@ export class MediaItem {
   @Prop({ type: String, default: '', trim: true })
   thumbnailUrl!: string;
 
+  /** S3 key of the poster frame, so it is deleted with the video it belongs to. */
+  @Prop({ type: String, default: '', trim: true })
+  thumbnailStorageKey!: string;
+
   @Prop({ type: String, enum: MEDIA_CATEGORIES, default: 'work-sites', index: true })
   category!: MediaCategory;
 

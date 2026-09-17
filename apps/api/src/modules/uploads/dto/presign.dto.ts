@@ -25,8 +25,11 @@ export class PresignDto {
   @ApiProperty({ example: 'windrow-turning.jpg' })
   @IsString()
   @MaxLength(200)
-  @Matches(/^[\w.\- ()]+$/, {
-    message: 'fileName may only contain letters, digits, spaces, dot, dash, underscore and parentheses',
+  // Only the separators are worth rejecting: the stored key is a UUID plus an
+  // extension derived from the validated content type, so nothing from this
+  // name is carried through verbatim.
+  @Matches(/^[^/\\]+$/, {
+    message: 'fileName may not contain path separators',
   })
   fileName!: string;
 
