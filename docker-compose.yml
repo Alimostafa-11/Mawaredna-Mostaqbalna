@@ -89,23 +89,25 @@ services:
       PORT: 4000
       API_PREFIX: api
       # Local stack runs production-like settings but keeps the docs on.
-      ENABLE_SWAGGER: 'true'
-      CORS_ORIGINS: http://localhost:3000
-      MONGODB_URI: mongodb://root:example@mongo:27017/agri?authSource=admin
-      JWT_SECRET: local-development-secret-change-me-please-32
-      JWT_EXPIRES_IN: 7d
-      ADMIN_EMAIL: admin@mawaredna.com
-      ADMIN_PASSWORD: ChangeMe123!
-      AWS_REGION: eu-central-1
-      S3_BUCKET: mawaredna-media
-      S3_ENDPOINT: http://minio:9000
+      ENABLE_SWAGGER: '${ENABLE_SWAGGER:-true}'
+      # Must list the origin the browser actually loads the site from, or every
+      # call from the public forms is blocked.
+      CORS_ORIGINS: '${CORS_ORIGINS:-http://localhost:3000}'
+      MONGODB_URI: '${MONGODB_URI:-mongodb://root:example@mongo:27017/agri?authSource=admin}'
+      JWT_SECRET: '${JWT_SECRET:-local-development-secret-change-me-please-32}'
+      JWT_EXPIRES_IN: '${JWT_EXPIRES_IN:-7d}'
+      ADMIN_EMAIL: '${ADMIN_EMAIL:-admin@mawaredna.com}'
+      ADMIN_PASSWORD: '${ADMIN_PASSWORD:-ChangeMe123!}'
+      AWS_REGION: '${AWS_REGION:-eu-central-1}'
+      S3_BUCKET: '${S3_BUCKET:-mawaredna-media}'
+      S3_ENDPOINT: '${S3_ENDPOINT:-http://minio:9000}'
       # The presigned PUT is followed by the browser, which cannot resolve the
       # compose hostname - so upload URLs are signed against the published port.
-      S3_PUBLIC_ENDPOINT: http://minio.localhost:9000
-      S3_FORCE_PATH_STYLE: 'true'
-      S3_PUBLIC_URL: http://minio.localhost:9000/mawaredna-media
-      AWS_ACCESS_KEY_ID: minioadmin
-      AWS_SECRET_ACCESS_KEY: minioadmin
+      S3_PUBLIC_ENDPOINT: '${S3_PUBLIC_ENDPOINT:-http://minio.localhost:9000}'
+      S3_FORCE_PATH_STYLE: '${S3_FORCE_PATH_STYLE:-true}'
+      S3_PUBLIC_URL: '${S3_PUBLIC_URL:-http://minio.localhost:9000/mawaredna-media}'
+      AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID:-minioadmin}'
+      AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY:-minioadmin}'
     ports:
       - '4000:4000'
 
@@ -114,19 +116,26 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
+        # NEXT_PUBLIC_* are compiled into the browser bundle, so these are
+        # BUILD args: changing them needs `docker compose up -d --build web`,
+        # not just a restart.
+        #
         # Reached from the browser, so it must be the host-visible URL.
-        NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
-        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+        NEXT_PUBLIC_API_URL: '${NEXT_PUBLIC_API_URL:-http://localhost:4000/api/v1}'
+        NEXT_PUBLIC_SITE_URL: '${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}'
         # Full origin, because the local MinIO serves media over plain http
         # on a non-default port. In AWS this is just the CDN hostname.
-        NEXT_PUBLIC_MEDIA_HOST: http://minio.localhost:9000
+        NEXT_PUBLIC_MEDIA_HOST: '${NEXT_PUBLIC_MEDIA_HOST:-http://minio.localhost:9000}'
         # Reached from inside the compose network during SSR.
-        API_URL: http://api:4000/api/v1
+        API_URL: '${API_URL:-http://api:4000/api/v1}'
     restart: unless-stopped
     depends_on:
       - api
     environment:
-      API_URL: http://api:4000/api/v1
+      API_URL: '${API_URL:-http://api:4000/api/v1}'
+      # Read at boot by next.config.ts for images.remotePatterns, so it is a
+      # runtime value here as well as a build arg above.
+      NEXT_PUBLIC_MEDIA_HOST: '${NEXT_PUBLIC_MEDIA_HOST:-http://minio.localhost:9000}'
     ports:
       - '3000:3000'
 

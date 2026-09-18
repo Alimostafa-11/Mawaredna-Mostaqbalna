@@ -246,10 +246,14 @@ box; a real S3 bucket does not until you set it:
 
 ```json
 [{ "AllowedOrigins": ["https://mawaredna.com"],
-   "AllowedMethods": ["PUT", "GET"],
-   "AllowedHeaders": ["Content-Type"],
+   "AllowedMethods": ["PUT"],
+   "AllowedHeaders": ["*"],
+   "ExposeHeaders": ["ETag"],
    "MaxAgeSeconds": 3000 }]
 ```
+
+The full walkthrough, including the smoke test that catches a wrong CORS rule,
+is in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 Accepted formats are JPG, PNG, WebP and AVIF up to 15 MB, and MP4 and WebM up
 to 200 MB. Anything else — `.mov` off an iPhone, `.heic` — has to be converted
