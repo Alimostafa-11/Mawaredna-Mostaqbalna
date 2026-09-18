@@ -231,25 +231,25 @@ Health check path: `/ar`.
 - `mawaredna.com` → web target group, port 3000.
 - ACM certificate on both; redirect 80 → 443.
 
-> **Give the API its own hostname. Never route `mawaredna.com/api/*` to it.**
+> **The web app's own server routes live under `/bff/`, never `/api/`.**
 >
-> The web app serves three `/api/*` routes of its own, and the dashboard
-> depends on all of them:
+> | Route | Served by | What it does |
+> | --- | --- | --- |
+> | `/bff/auth/login` | web | Exchanges credentials for the httpOnly session cookie |
+> | `/bff/auth/logout` | web | Clears it |
+> | `/bff/admin/*` | web | Attaches the token server-side and forwards to the API |
+> | `/api/v1/*` | API | Everything the NestJS backend serves |
 >
-> | Route | What it does |
-> | --- | --- |
-> | `/api/auth/login` | Exchanges credentials for the httpOnly session cookie |
-> | `/api/auth/logout` | Clears it |
-> | `/api/admin/*` | Attaches the token server-side and forwards to the API |
+> They are deliberately disjoint, so you can host both behind one hostname
+> without a collision: route `/api/*` (or just `/api/v1/*`) to the API and let
+> everything else fall through to the web app. Giving the API its own hostname
+> works equally well.
 >
-> Point `/api/*` on the site's domain at the API service and every one of them
-> is shadowed. The API has no `/api/auth/login` — its routes are versioned
-> under `/api/v1/` — so the login form gets a **404** and no one can sign in.
-> The gallery uploader breaks the same way, since it calls `/api/admin/*`.
->
-> The browser only ever talks to the site's own origin for these; the web
-> container reaches the API server-side via `API_URL`. That is the whole point
-> of the design — the JWT never reaches the browser.
+> The one rule: **`/bff/*` must always reach the web app.** Point it at the
+> backend and the dashboard login returns 404, because the API has no such
+> route. The browser only ever calls `/bff/*` on the site's own origin; the web
+> container reaches the API server-side via `API_URL`, so the JWT never
+> reaches the browser.
 
 The API calls `app.set('trust proxy', 1)`, so rate limiting sees the real
 client IP from `X-Forwarded-For` rather than the load balancer's.
@@ -324,7 +324,7 @@ with more than one task the effective limit is `limit × task count`. If you
 need a global limit, put an AWS WAF rate-based rule in front of the ALB, or
 back the limiter with ElastiCache.
 
-**ISR revalidation is per container too.** `/api/admin/*` calls
+**ISR revalidation is per container too.** `/bff/admin/*` calls
 `revalidateTag` after every successful write, so a gallery upload or a content
 edit appears immediately — but only on the web task that served that request.
 Other tasks keep their own cached copy until `CONTENT_REVALIDATE_SECONDS`

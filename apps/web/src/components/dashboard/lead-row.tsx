@@ -13,7 +13,7 @@ import { LeadStatusBadge } from './lead-status-badge';
 /**
  * One lead, collapsed to a summary row and expandable to the full record.
  *
- * Status and notes are written through `/api/admin/*`, which attaches the
+ * Status and notes are written through `/bff/admin/*`, which attaches the
  * session token server-side — the browser never holds it.
  */
 export function LeadRow({ lead }: { lead: Inquiry }) {
@@ -31,7 +31,7 @@ export function LeadRow({ lead }: { lead: Inquiry }) {
     setIsSaving(true);
 
     try {
-      const response = await fetch(`/api/admin/inquiries/${lead._id}`, {
+      const response = await fetch(`/bff/admin/inquiries/${lead._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, internalNotes: notes }),

@@ -13,7 +13,7 @@ import type { MediaKind } from './types';
  * and object key come back to be saved as a media record. That keeps a 200 MB
  * site video off both application containers.
  *
- * Every call to our own API goes through `/api/admin/*`, which attaches the
+ * Every call to our own API goes through `/bff/admin/*`, which attaches the
  * httpOnly session token server-side - the browser never holds a bearer token.
  */
 
@@ -79,7 +79,7 @@ async function presign(
   fileName: string,
   contentType: string,
 ): Promise<PresignedUpload> {
-  const response = await fetch('/api/admin/uploads/presign', {
+  const response = await fetch('/bff/admin/uploads/presign', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fileName, contentType, folder: 'gallery' }),
@@ -213,13 +213,13 @@ function once(video: HTMLVideoElement, event: string, timeoutMs = 10_000) {
 }
 
 export async function deleteBucketObject(key: string): Promise<void> {
-  await fetch(`/api/admin/uploads?key=${encodeURIComponent(key)}`, {
+  await fetch(`/bff/admin/uploads?key=${encodeURIComponent(key)}`, {
     method: 'DELETE',
   }).catch(() => undefined);
 }
 
 async function createMediaRecord(payload: CreateMediaPayload): Promise<MediaRecord> {
-  const response = await fetch('/api/admin/media', {
+  const response = await fetch('/bff/admin/media', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

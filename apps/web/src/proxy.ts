@@ -12,10 +12,12 @@ import { routing } from './i18n/routing';
 export default createMiddleware(routing);
 
 export const config = {
-  // Everything except Next internals, API routes, the dashboard, and any path
-  // that looks like a static file (contains a dot).
+  // Everything except Next internals, the app's own /bff routes, the
+  // dashboard, and any path that looks like a static file (contains a dot).
   //
   // `/dashboard` is excluded on purpose: it is internal tooling with no
-  // localized URLs, so it must not be rewritten to `/ar/dashboard`.
-  matcher: ['/((?!api|dashboard|_next|_vercel|.*\\..*).*)'],
+  // localized URLs, so it must not be rewritten to `/ar/dashboard`. `/bff`
+  // is the app's own server-side routes and must reach them unrewritten;
+  // `/api` stays excluded so it can be pointed at the backend by a proxy.
+  matcher: ['/((?!bff|api|dashboard|_next|_vercel|.*\\..*).*)'],
 };

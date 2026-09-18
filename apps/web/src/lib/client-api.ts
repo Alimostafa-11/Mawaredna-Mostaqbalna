@@ -1,7 +1,20 @@
 import type { EstimateResult, InquiryPayload } from './types';
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1';
+/**
+ * Base the browser calls the API on.
+ *
+ * Defaults to a same-origin path, not localhost. `NEXT_PUBLIC_*` values are
+ * compiled into this bundle at build time, so a localhost default that slips
+ * through is not a broken dev setup - it is a live site telling every visitor's
+ * browser to call their own machine, which fails as an opaque CORS error. A
+ * relative default is correct wherever the API is proxied under the site's own
+ * domain, and merely wrong in an obvious, local way otherwise.
+ *
+ * Running the API on a separate port or host (local development, a dedicated
+ * api.* hostname) therefore has to set NEXT_PUBLIC_API_URL explicitly - see
+ * apps/web/.env.example.
+ */
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api/v1';
 
 export class ApiError extends Error {
   constructor(

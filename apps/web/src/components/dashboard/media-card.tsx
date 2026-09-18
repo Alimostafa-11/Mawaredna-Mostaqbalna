@@ -49,7 +49,7 @@ export function MediaCard({ item }: { item: MediaRecord }) {
     order !== String(item.order ?? 0);
 
   async function patch(body: Record<string, unknown>) {
-    const response = await fetch(`/api/admin/media/${item._id}`, {
+    const response = await fetch(`/bff/admin/media/${item._id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -98,7 +98,7 @@ export function MediaCard({ item }: { item: MediaRecord }) {
     setIsBusy(true);
 
     try {
-      const response = await fetch(`/api/admin/media/${item._id}`, {
+      const response = await fetch(`/bff/admin/media/${item._id}`, {
         method: 'DELETE',
       });
 

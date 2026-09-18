@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 /**
- * Runs admin-protected GET calls through `/api/admin/*` and shows the raw
+ * Runs admin-protected GET calls through `/bff/admin/*` and shows the raw
  * JSON.
  *
  * Read-only on purpose: an accidental DELETE from a convenience tool is not a
@@ -41,7 +41,7 @@ export function ApiExplorer() {
     setStatus(null);
 
     try {
-      const response = await fetch(`/api/admin/${selected}`, {
+      const response = await fetch(`/bff/admin/${selected}`, {
         headers: { Accept: 'application/json' },
       });
 

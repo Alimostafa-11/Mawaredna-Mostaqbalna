@@ -204,12 +204,12 @@ Seeded credentials are `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the API env
 
 ### How the session works
 
-Login posts to `/api/auth/login`, a Next route handler that calls the API and
+Login posts to `/bff/auth/login`, a Next route handler that calls the API and
 stores the JWT in an **httpOnly cookie**. Page scripts can never read it, which
 matters because the dashboard displays customers' names and phone numbers.
 
 Because the token is httpOnly, browser code cannot call the API directly.
-Writes go through `/api/admin/*`, a pass-through that attaches the token
+Writes go through `/bff/admin/*`, a pass-through that attaches the token
 server-side. It grants nothing beyond the signed-in session — the API still
 enforces its guard on every route.
 

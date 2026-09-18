@@ -15,7 +15,7 @@ export function SignOutButton() {
     setIsPending(true);
 
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch('/bff/auth/logout', { method: 'POST' });
     } finally {
       // Clears the cached server render that assumed a session.
       router.replace('/dashboard/login');

@@ -17,7 +17,7 @@ export interface AdminUser {
 /**
  * The bearer token lives in an httpOnly cookie, so page scripts can never read
  * it. Every admin request is therefore made server-side, or proxied through
- * `/api/admin/*` which attaches the token for the browser.
+ * `/bff/admin/*` which attaches the token for the browser.
  */
 export async function getAdminToken(): Promise<string | null> {
   const store = await cookies();

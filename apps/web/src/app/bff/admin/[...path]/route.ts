@@ -6,7 +6,7 @@ import { getAdminToken, getApiUrl } from '@/lib/admin-auth';
  * Authenticated pass-through to the admin API.
  *
  * The session token is httpOnly, so browser code cannot call the API directly.
- * Instead it calls `/api/admin/<path>` and this handler attaches the bearer
+ * Instead it calls `/bff/admin/<path>` and this handler attaches the bearer
  * token server-side. The caller gains nothing beyond what their own session
  * already permits — the API still enforces the guard on every route.
  */
