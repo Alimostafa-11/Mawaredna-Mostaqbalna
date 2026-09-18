@@ -56,6 +56,10 @@ export class Inquiry {
   @Prop({ type: String, default: '', trim: true })
   governorate!: string;
 
+  /** The markaz (administrative centre) within the governorate. */
+  @Prop({ type: String, default: '', trim: true })
+  center!: string;
+
   @Prop({ type: String, enum: INQUIRY_TYPES, required: true, index: true })
   type!: InquiryType;
 

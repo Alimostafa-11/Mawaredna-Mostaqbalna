@@ -55,6 +55,12 @@ export class CreateInquiryDto {
   @MaxLength(80)
   governorate?: string;
 
+  @ApiPropertyOptional({ example: 'نقادة', description: 'Markaz within the governorate' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  center?: string;
+
   @ApiProperty({ enum: INQUIRY_TYPES })
   @IsIn(INQUIRY_TYPES as unknown as string[])
   type!: (typeof INQUIRY_TYPES)[number];
@@ -93,7 +99,15 @@ export class CreateInquiryDto {
 }
 
 export class UpdateInquiryDto extends PartialType(
-  PickType(CreateInquiryDto, ['name', 'phone', 'email', 'company', 'governorate', 'message'] as const),
+  PickType(CreateInquiryDto, [
+    'name',
+    'phone',
+    'email',
+    'company',
+    'governorate',
+    'center',
+    'message',
+  ] as const),
 ) {
   @ApiPropertyOptional({ enum: INQUIRY_STATUSES })
   @IsOptional()

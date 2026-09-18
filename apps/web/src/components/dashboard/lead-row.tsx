@@ -119,6 +119,15 @@ export function LeadRow({ lead }: { lead: Inquiry }) {
                   {lead.governorate}
                 </Detail>
               )}
+
+              {lead.center && (
+                <Detail
+                  icon={<MapPin aria-hidden className="size-4" />}
+                  label={t('leads.center')}
+                >
+                  {lead.center}
+                </Detail>
+              )}
             </dl>
 
             {lead.message && (

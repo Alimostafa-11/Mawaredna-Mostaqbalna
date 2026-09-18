@@ -51,6 +51,7 @@
     "noResults": "There is nothing to show here yet."
   },
   "home": {
+    "heroImageAlt": "Mawaredna Mostaqbalna compost, made from agricultural waste",
     "heroTitle": "We are building a future from agricultural waste",
     "heroSubtitle": "We collect agricultural and sugarcane residues, process them and recycle them into compost and organic fertilisers.",
     "heroPrimaryCta": "Order compost",
@@ -485,6 +486,7 @@
       "phone": "Phone",
       "type": "Type",
       "governorate": "Governorate",
+      "center": "Center",
       "status": "Status",
       "date": "Date",
       "message": "Details",

@@ -49,6 +49,7 @@ export interface Inquiry {
   email: string;
   company: string;
   governorate: string;
+  center: string;
   type: InquiryType;
   message: string;
   calculation?: CalculationSnapshot;

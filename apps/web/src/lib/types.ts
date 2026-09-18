@@ -201,6 +201,8 @@ export interface InquiryPayload {
   email?: string;
   company?: string;
   governorate?: string;
+  /** Markaz within the governorate. */
+  center?: string;
   type: InquiryType;
   message?: string;
   source?: string;

@@ -71,6 +71,7 @@ export function InquiryForm({
       .regex(/^(\+?2)?0?1[0125]\d{8}$|^(\+?2)?0?\d{2,3}\d{6,8}$/, t('validation.phone')),
     email: z.union([z.literal(''), z.email(t('validation.email'))]).optional(),
     company: z.string().trim().max(160).optional(),
+    center: z.string().trim().max(80).optional(),
     message: z.string().trim().max(4000).optional(),
   });
 
@@ -105,6 +106,7 @@ export function InquiryForm({
         ...parsed.data,
         email: parsed.data.email || undefined,
         company: parsed.data.company || undefined,
+        center: parsed.data.center || undefined,
         message: parsed.data.message || undefined,
         governorate: governorate || undefined,
         type,
