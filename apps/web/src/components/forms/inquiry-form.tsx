@@ -85,6 +85,7 @@ export function InquiryForm({
       email: form.get('email') || '',
       company: form.get('company') || '',
       message: form.get('message') || '',
+      center: form.get('center') || '',
     });
 
     if (!parsed.success) {
@@ -176,6 +177,15 @@ export function InquiryForm({
         <TextField name="company" fullWidth>
           <Label>
             {t('fields.company')}{' '}
+            <span className="text-[var(--muted)]">({tCommon('optional')})</span>
+          </Label>
+          <Input autoComplete="organization" />
+          <FieldError />
+        </TextField>
+        
+        <TextField name="center" fullWidth>
+          <Label>
+            {t('fields.center')}{' '}
             <span className="text-[var(--muted)]">({tCommon('optional')})</span>
           </Label>
           <Input autoComplete="organization" />

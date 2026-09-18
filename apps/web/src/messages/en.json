@@ -321,6 +321,7 @@
       "phone": "Phone number",
       "email": "Email",
       "company": "Company or farm name",
+      "center":"Center name",
       "governorate": "Governorate",
       "type": "Request type",
       "message": "Request details",
