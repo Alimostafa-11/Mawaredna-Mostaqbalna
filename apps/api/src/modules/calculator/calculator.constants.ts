@@ -1,56 +1,65 @@
 /**
  * Application-rate table for the farm calculator.
  *
- * The figures are conventional organic-matter application ranges used for
- * planning purposes in Egyptian agriculture, expressed in tonnes of finished
- * compost per feddan per season. They produce a PRELIMINARY estimate only:
- * the site states plainly that a soil analysis and a site visit are what
- * actually determine the dose, and every response carries that disclaimer.
+ * Each crop carries TWO independent planning ranges - one by weight, one by
+ * volume. Volume is not derived from weight here: the company quotes cubic
+ * metres from its own loading experience, which does not track the nominal
+ * bulk density exactly.
  *
- * Tune these with the company agronomist before launch.
+ *   tonnes = area x cropTons
+ *   m3     = area x cropCubic
+ *
+ * Soil type is collected but does not affect the quantity.
+ *
+ * They produce a PRELIMINARY estimate only: the site states plainly that a
+ * soil analysis and a site visit are what actually determine the dose, and
+ * every response carries that disclaimer.
+ *
+ * CONFIRMED with the client: date palms, 4-7 t/feddan and 8-13 m3/feddan.
+ * The other six rows are proportional placeholders and still need the
+ * company agronomist's figures before launch.
  */
 export interface CropRate {
   key: string;
   labelAr: string;
   labelEn: string;
-  /** Tonnes of compost per feddan, low end of the planning range. */
+  /** Tonnes of compost per feddan. */
   tonsPerFeddanMin: number;
-  /** Tonnes of compost per feddan, high end of the planning range. */
   tonsPerFeddanMax: number;
+  /** Cubic metres per feddan. */
+  cubicMetersPerFeddanMin: number;
+  cubicMetersPerFeddanMax: number;
 }
 
 export const CROP_RATES: CropRate[] = [
-  { key: 'field-crops', labelAr: 'محاصيل حقلية', labelEn: 'Field crops', tonsPerFeddanMin: 4, tonsPerFeddanMax: 6 },
-  { key: 'vegetables', labelAr: 'خضروات', labelEn: 'Vegetables', tonsPerFeddanMin: 8, tonsPerFeddanMax: 12 },
-  { key: 'orchards', labelAr: 'أشجار مثمرة وبساتين', labelEn: 'Orchards and fruit trees', tonsPerFeddanMin: 6, tonsPerFeddanMax: 10 },
-  { key: 'sugarcane', labelAr: 'قصب السكر', labelEn: 'Sugarcane', tonsPerFeddanMin: 6, tonsPerFeddanMax: 8 },
-  { key: 'palms', labelAr: 'نخيل', labelEn: 'Date palms', tonsPerFeddanMin: 5, tonsPerFeddanMax: 8 },
-  { key: 'protected-agriculture', labelAr: 'زراعات محمية (صوب)', labelEn: 'Protected agriculture', tonsPerFeddanMin: 10, tonsPerFeddanMax: 15 },
-  { key: 'newly-reclaimed', labelAr: 'أراضٍ مستصلحة حديثًا', labelEn: 'Newly reclaimed land', tonsPerFeddanMin: 10, tonsPerFeddanMax: 15 },
+  { key: 'field-crops', labelAr: 'محاصيل حقلية', labelEn: 'Field crops', tonsPerFeddanMin: 7, tonsPerFeddanMax: 10, cubicMetersPerFeddanMin: 10, cubicMetersPerFeddanMax: 15 },
+  { key: 'vegetables', labelAr: 'خضروات', labelEn: 'Vegetables', tonsPerFeddanMin: 7, tonsPerFeddanMax: 10, cubicMetersPerFeddanMin: 14, cubicMetersPerFeddanMax: 19 },
+  { key: 'orchards', labelAr: 'أشجار مثمرة وبساتين', labelEn: 'Orchards and fruit trees', tonsPerFeddanMin: 5, tonsPerFeddanMax: 8, cubicMetersPerFeddanMin: 10, cubicMetersPerFeddanMax: 15 },
+  { key: 'sugarcane', labelAr: 'قصب السكر', labelEn: 'Sugarcane', tonsPerFeddanMin: 5, tonsPerFeddanMax: 7, cubicMetersPerFeddanMin: 10, cubicMetersPerFeddanMax: 13 },
+  // Confirmed by the client.
+  { key: 'palms', labelAr: 'نخيل', labelEn: 'Date palms', tonsPerFeddanMin: 4, tonsPerFeddanMax: 7, cubicMetersPerFeddanMin: 8, cubicMetersPerFeddanMax: 13 },
+  { key: 'protected-agriculture', labelAr: 'زراعات محمية (صوب)', labelEn: 'Protected agriculture', tonsPerFeddanMin: 8, tonsPerFeddanMax: 12, cubicMetersPerFeddanMin: 16, cubicMetersPerFeddanMax: 22 },
+  { key: 'newly-reclaimed', labelAr: 'أراضٍ مستصلحة حديثًا', labelEn: 'Newly reclaimed land', tonsPerFeddanMin: 8, tonsPerFeddanMax: 12, cubicMetersPerFeddanMin: 16, cubicMetersPerFeddanMax: 22 },
 ];
 
-export interface SoilFactor {
+export interface SoilType {
   key: string;
   labelAr: string;
   labelEn: string;
-  /** Multiplier applied to the crop rate. */
-  factor: number;
 }
 
-export const SOIL_FACTORS: SoilFactor[] = [
-  { key: 'sandy', labelAr: 'رملية', labelEn: 'Sandy', factor: 1.3 },
-  { key: 'loamy', labelAr: 'صفراء (طميية)', labelEn: 'Loamy', factor: 1.0 },
-  { key: 'clay', labelAr: 'طينية', labelEn: 'Clay', factor: 0.85 },
-  { key: 'calcareous', labelAr: 'جيرية', labelEn: 'Calcareous', factor: 1.2 },
-  { key: 'saline', labelAr: 'ملحية', labelEn: 'Saline', factor: 1.15 },
-];
-
 /**
- * Bulk density of the finished compost, from the product specification
- * (500-600 kg per cubic metre). Used to convert tonnes into cubic metres so
- * customers can plan transport.
+ * Collected for the sales conversation and stored on the resulting lead, but
+ * deliberately NOT part of the arithmetic - the quantity comes from the crop
+ * rate alone.
  */
-export const BULK_DENSITY_KG_PER_M3 = { min: 500, max: 600 } as const;
+export const SOIL_TYPES: SoilType[] = [
+  { key: 'sandy', labelAr: 'رملية', labelEn: 'Sandy' },
+  { key: 'loamy', labelAr: 'صفراء (طميية)', labelEn: 'Loamy' },
+  { key: 'clay', labelAr: 'طينية', labelEn: 'Clay' },
+  { key: 'calcareous', labelAr: 'جيرية', labelEn: 'Calcareous' },
+  { key: 'saline', labelAr: 'ملحية', labelEn: 'Saline' },
+];
 
 /** Governorates the company can currently serve. Edit before launch. */
 export const GOVERNORATES = [

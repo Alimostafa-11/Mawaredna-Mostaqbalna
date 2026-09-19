@@ -183,8 +183,6 @@ export interface EstimateResult {
     cropLabelEn: string;
     soilLabelAr: string;
     soilLabelEn: string;
-    soilFactor: number;
-    bulkDensityKgPerM3: { min: number; max: number };
   };
   disclaimerAr: string;
   disclaimerEn: string;

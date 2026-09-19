@@ -1,10 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import {
-  BULK_DENSITY_KG_PER_M3,
-  CROP_RATES,
-  GOVERNORATES,
-  SOIL_FACTORS,
-} from './calculator.constants';
+import { CROP_RATES, GOVERNORATES, SOIL_TYPES } from './calculator.constants';
 import { EstimateDto } from './dto/estimate.dto';
 
 export interface EstimateResult {
@@ -23,8 +18,6 @@ export interface EstimateResult {
     cropLabelEn: string;
     soilLabelAr: string;
     soilLabelEn: string;
-    soilFactor: number;
-    bulkDensityKgPerM3: typeof BULK_DENSITY_KG_PER_M3;
   };
   disclaimerAr: string;
   disclaimerEn: string;
@@ -35,42 +28,45 @@ export class CalculatorService {
   options() {
     return {
       crops: CROP_RATES.map(({ key, labelAr, labelEn }) => ({ key, labelAr, labelEn })),
-      soils: SOIL_FACTORS.map(({ key, labelAr, labelEn }) => ({ key, labelAr, labelEn })),
+      soils: SOIL_TYPES,
       governorates: GOVERNORATES,
     };
   }
 
   estimate(dto: EstimateDto): EstimateResult {
     const crop = CROP_RATES.find((c) => c.key === dto.cropType);
-    const soil = SOIL_FACTORS.find((s) => s.key === dto.soilType);
+    const soil = SOIL_TYPES.find((s) => s.key === dto.soilType);
 
     if (!crop || !soil) {
       throw new BadRequestException('Unknown crop or soil type');
     }
 
-    const perFeddanMin = crop.tonsPerFeddanMin * soil.factor;
-    const perFeddanMax = crop.tonsPerFeddanMax * soil.factor;
+    // The crop alone sets the rate. Soil is still chosen and echoed back - the
+    // sales team needs it - but it no longer moves the quantity.
+    //
+    // Weight and volume are two independent planning ranges: volume is NOT
+    // derived from the tonnage, because the company quotes cubic metres from
+    // its own loading experience, which does not track the nominal bulk
+    // density exactly.
+    const tonsPerFeddanMin = crop.tonsPerFeddanMin;
+    const tonsPerFeddanMax = crop.tonsPerFeddanMax;
 
-    const tonsMin = perFeddanMin * dto.areaFeddan;
-    const tonsMax = perFeddanMax * dto.areaFeddan;
-
-    // Denser compost occupies less volume, so the max density gives the
-    // min cubic metres and vice versa.
-    const m3Min = (tonsMin * 1000) / BULK_DENSITY_KG_PER_M3.max;
-    const m3Max = (tonsMax * 1000) / BULK_DENSITY_KG_PER_M3.min;
-
-    // The rate a farmer actually orders by, in volume - same density
-    // inversion as the total above.
-    const m3PerFeddanMin = (perFeddanMin * 1000) / BULK_DENSITY_KG_PER_M3.max;
-    const m3PerFeddanMax = (perFeddanMax * 1000) / BULK_DENSITY_KG_PER_M3.min;
+    const m3PerFeddanMin = crop.cubicMetersPerFeddanMin;
+    const m3PerFeddanMax = crop.cubicMetersPerFeddanMax;
 
     return {
       input: dto,
-      tons: { min: round(tonsMin), max: round(tonsMax) },
-      cubicMeters: { min: round(m3Min), max: round(m3Max) },
+      tons: {
+        min: round(tonsPerFeddanMin * dto.areaFeddan),
+        max: round(tonsPerFeddanMax * dto.areaFeddan),
+      },
+      cubicMeters: {
+        min: round(m3PerFeddanMin * dto.areaFeddan),
+        max: round(m3PerFeddanMax * dto.areaFeddan),
+      },
       perFeddan: {
-        tonsMin: round(perFeddanMin),
-        tonsMax: round(perFeddanMax),
+        tonsMin: round(tonsPerFeddanMin),
+        tonsMax: round(tonsPerFeddanMax),
         cubicMetersMin: round(m3PerFeddanMin),
         cubicMetersMax: round(m3PerFeddanMax),
       },
@@ -79,8 +75,6 @@ export class CalculatorService {
         cropLabelEn: crop.labelEn,
         soilLabelAr: soil.labelAr,
         soilLabelEn: soil.labelEn,
-        soilFactor: soil.factor,
-        bulkDensityKgPerM3: BULK_DENSITY_KG_PER_M3,
       },
       disclaimerAr:
         'هذا تقدير مبدئي لأغراض التخطيط فقط ولا يغني عن تحليل التربة وزيارة الموقع. تُحدد الكمية النهائية بعد دراسة حالة الأرض والمحصول من قِبل فريق الشركة.',
