@@ -171,8 +171,13 @@ export interface EstimateResult {
   };
   tons: { min: number; max: number };
   cubicMeters: { min: number; max: number };
-  perFeddan: { tonsMin: number; tonsMax: number };
-  bags50kg: { min: number; max: number };
+  /** Application rate for one feddan, by weight and by volume. */
+  perFeddan: {
+    tonsMin: number;
+    tonsMax: number;
+    cubicMetersMin: number;
+    cubicMetersMax: number;
+  };
   basis: {
     cropLabelAr: string;
     cropLabelEn: string;

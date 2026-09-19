@@ -229,13 +229,13 @@ export function CalculatorForm({ options }: CalculatorFormProps) {
                     unit={t('tonPerFeddan')}
                   />
                   <ResultTile
-                    label={t('resultBags')}
+                    label={t('resultCubicMetersPerFeddan')}
                     value={formatRange(
-                      result.bags50kg.min,
-                      result.bags50kg.max,
+                      result.perFeddan.cubicMetersMin,
+                      result.perFeddan.cubicMetersMax,
                       locale,
                     )}
-                    unit={t('bag')}
+                    unit={t('cubicMeterPerFeddan')}
                   />
                 </dl>
 

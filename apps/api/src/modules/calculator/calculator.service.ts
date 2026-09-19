@@ -11,9 +11,13 @@ export interface EstimateResult {
   input: EstimateDto;
   tons: { min: number; max: number };
   cubicMeters: { min: number; max: number };
-  perFeddan: { tonsMin: number; tonsMax: number };
-  /** Rough number of 50 kg bags, for small farms that order bagged product. */
-  bags50kg: { min: number; max: number };
+  /** Application rate for one feddan, by weight and by volume. */
+  perFeddan: {
+    tonsMin: number;
+    tonsMax: number;
+    cubicMetersMin: number;
+    cubicMetersMax: number;
+  };
   basis: {
     cropLabelAr: string;
     cropLabelEn: string;
@@ -55,16 +59,20 @@ export class CalculatorService {
     const m3Min = (tonsMin * 1000) / BULK_DENSITY_KG_PER_M3.max;
     const m3Max = (tonsMax * 1000) / BULK_DENSITY_KG_PER_M3.min;
 
+    // The rate a farmer actually orders by, in volume - same density
+    // inversion as the total above.
+    const m3PerFeddanMin = (perFeddanMin * 1000) / BULK_DENSITY_KG_PER_M3.max;
+    const m3PerFeddanMax = (perFeddanMax * 1000) / BULK_DENSITY_KG_PER_M3.min;
+
     return {
       input: dto,
       tons: { min: round(tonsMin), max: round(tonsMax) },
       cubicMeters: { min: round(m3Min), max: round(m3Max) },
-      perFeddan: { tonsMin: round(perFeddanMin), tonsMax: round(perFeddanMax) },
-      // Derived from the rounded tonnage: multiplying the raw float would let
-      // binary drift push an exact 390 t up to 7801 bags instead of 7800.
-      bags50kg: {
-        min: Math.ceil((round(tonsMin) * 1000) / 50),
-        max: Math.ceil((round(tonsMax) * 1000) / 50),
+      perFeddan: {
+        tonsMin: round(perFeddanMin),
+        tonsMax: round(perFeddanMax),
+        cubicMetersMin: round(m3PerFeddanMin),
+        cubicMetersMax: round(m3PerFeddanMax),
       },
       basis: {
         cropLabelAr: crop.labelAr,
